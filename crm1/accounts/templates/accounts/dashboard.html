@@ -8,7 +8,6 @@
 <div class="row">
     <div  class="col-md-5">
         <h5>CUSTOMERS:</h5>
-        <hr>
         <div class="card card-body">
             <a class="btn btn-primary  btn-sm btn-block" href="">Create Customer
             </a>
@@ -16,25 +15,43 @@
                 <tr>
                     <th></th>
                     <th>Customer</th>
-                    <th>Orders</th>
+                    <th>Email</th>
                 </tr>
+                {%for customer in customers%}
+                <tr>
+                    <td><a class="btn btn-sm btn-info" href="{%url 'customer' customer.id %}">View</a></td>
+                    <td>{{customer.name}}</td>
+                    <td>{{customer.email}}</td>
+                </tr>
+                {%endfor%}
             </table>
         </div>
     </div>
 
     <div class="col-md-7">
         <h5>LAST 5 ORDERS</h5>
-        <hr>
         <div class="card card-body">
-            <a class= "btn btn-primary btn-sm btn-block" href="">Create Order</a>
+ 
             <table class="table table-sm">
                 <tr>
-                    <th>Product</th>
-                    <th>Date Ordered</th>
-                    <th>Status</th>
+                    <th><a href="?order_by=product&order_dir={{ order_dir }}">Product</a></th>
+                    <th><a href="?order_by=date_created&order_dir={{ order_dir }}">Date Ordered</a></th>
+                    <th><a href="?order_by=status&order_dir={{ order_dir }}">Status</a></th>
+                    
                     <th>Update</th>
-                    <th>Remove</th>
+                    <th>Remove</th>                       
                 </tr>
+                {%for order in last_5_orders%}
+                <tr>
+                    <td>{{order.product}}</td>
+                    <td>{{order.date_created}}</td>
+                    <td>{{order.status}}</td>
+                    <td><a class='btn btn-sm btn-info' href="{% url 'update_order' order.id %}">Update</a></td>
+                    <td><a class='btn btn-sm btn-danger' href="{% url 'delete_order' order.id %}">Delete</a></td>
+                </tr>
+                {%endfor%}
+
+
             </table>
         </div>
     </div>
